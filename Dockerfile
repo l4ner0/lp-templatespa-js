@@ -1,24 +1,13 @@
-# versión del NODE
-FROM node:12.18.2
+# etapa de compilación
+FROM node:12.18.2 as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-#ENV APP_ROOT /src
-RUN mkdir -p /usr/src/nodeapp
-
-WORKDIR /usr/src/nodeapp
-
-COPY ["package.json", "yarn.lock", "/usr/src/nodeapp/"]
-
-#ADD . ${APP_ROOT}
-
-RUN yarn
-
-COPY [".", "/usr/src/nodeapp/"]
-
-RUN yarn build
-
-ENV HOST 0.0.0.0
-
-EXPOSE 3000
-
-CMD [ "yarn", "start" ]
-
+# etapa de producción
+FROM nginx as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

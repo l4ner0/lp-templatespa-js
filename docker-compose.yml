@@ -1,8 +1,9 @@
 version: "3"
 
 services: 
-    ld-template-js:
+    template:
         build: .
         restart: always
         ports: 
-            - "3000:3000"
+            - "8080:80"
+            
