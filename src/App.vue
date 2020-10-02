@@ -3,9 +3,7 @@
     <template v-if="!isMantenimiento">
       <credinstanteLayout>
         <component :is="currentComponent" :entorno="entorno" />
-      </credinstanteLayout>
-      <ModalText />
-      <ModalAlert />
+      </credinstanteLayout>      
     </template>
     <template v-else>
       <Mantenimiento>
@@ -31,9 +29,7 @@ export default {
   name: "App",
   components: {
     credinstanteLayout,
-    HelloWorld,
-    ModalText: () => import("@/components/Modals/ModalText"),
-    ModalAlert: () => import("@/components/Modals/ModalAlert"),
+    HelloWorld,    
     Mantenimiento: () => import("@/components/Utils/Mantenimiento"),
   },
   computed: {

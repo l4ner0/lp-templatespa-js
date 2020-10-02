@@ -1,67 +1,75 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('@/assets/images/template/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
+  <div>
+    <v-container>
+      <v-row class="text-center">
+        <v-col cols="12">
+          <v-img
+            :src="require('@/assets/images/template/logo.svg')"
+            class="my-3"
+            contain
+            height="200"
+          />
+        </v-col>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3 text__primary">
-          Template para Landings
-        </h1>
+        <v-col class="mb-4">
+          <h1 class="display-2 font-weight-bold mb-3 text__primary">
+            Template para Landings
+          </h1>
 
-        <p class="subheading font-weight-regular text__primary">
-          Template elaborado con vuejs
-          <br />para el desarrollo ágil de proyectos en Acceso Crediticio
-        </p>
-        <v-btn @click="openModalText" class="mb-2 mr-1 content__primary text__secondary"
-          >Modal Text
-        </v-btn>
-        <v-btn @click="openModalAlert" class="mb-2 ml-1 content__primary text__secondary"
-          >Modal Alert
-        </v-btn>
-      </v-col>
+          <p class="subheading font-weight-regular text__primary">
+            Template elaborado con vuejs
+            <br />para el desarrollo ágil de proyectos en Acceso Crediticio
+          </p>
+          <v-btn @click="openModalText" class="mb-2 mr-1 content__primary text__secondary"
+            >Modal Text
+          </v-btn>
+          <v-btn @click="openModalAlert" class="mb-2 ml-1 content__primary text__secondary"
+            >Modal Alert
+          </v-btn>
+        </v-col>
 
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3 text__primary">
-          Entorno de Trabajo
-        </h2>
+        <v-col class="mb-5" cols="12">
+          <h2 class="headline font-weight-bold mb-3 text__primary">
+            Entorno de Trabajo
+          </h2>
 
-        <v-row justify="center" class="text__primary">
-          <p>{{ entorno }}</p>
-        </v-row>
-      </v-col>
+          <v-row justify="center" class="text__primary">
+            <p>{{ entorno }}</p>
+          </v-row>
+        </v-col>
 
-      <v-col class="mb-5" cols="12">
-        <h2 class="headline font-weight-bold mb-3 text__primary">
-          Ecosistema
-        </h2>
+        <v-col class="mb-5" cols="12">
+          <h2 class="headline font-weight-bold mb-3 text__primary">
+            Ecosistema
+          </h2>
 
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3 text__primary"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+          <v-row justify="center">
+            <a
+              v-for="(eco, i) in ecosystem"
+              :key="i"
+              :href="eco.href"
+              class="subheading mx-3 text__primary"
+              target="_blank"
+            >
+              {{ eco.text }}
+            </a>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <ModalText ref="modalText" />
+    <ModalAlert ref="modalAlert" />
+  </div>
 </template>
 
 <script>
 export default {
   name: "HelloWorld",
   props: ["entorno"],
+  components: {
+    ModalText: () => import("@/components/Modals/ModalText"),
+    ModalAlert: () => import("@/components/Modals/ModalAlert"),
+  },
   data: () => ({
     ecosystem: [
       {
@@ -88,20 +96,21 @@ export default {
   }),
   methods: {
     openModalText() {
-      this.$store.dispatch("ui/setModalText", {
-        isModal: true,
+      const data = { 
+        isPersistent: true,
         titulo: "Título del Modal",
         texto: "Contenido del Modal"
-      });
+      };
+      this.$refs.modalText.open(data);
     },
     openModalAlert() {
-      this.$store.dispatch("ui/setModalAlert", {
-        isModal: true,
+      const data = {
         isPersistent: true,
         imgModal: 'success',
         tituloModal: "Título del Modal",
-        msgModal: "Contenido del Modal"        
-      });
+        msgModal: "Contenido del Modal"
+      }
+      this.$refs.modalAlert.open(data);
     },
   },
 };
