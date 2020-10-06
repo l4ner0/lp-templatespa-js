@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { dataModal }  from "@/enums"
 export default {
   name: "HelloWorld",
   props: ["entorno"],
@@ -101,7 +102,7 @@ export default {
         titulo: "Título del Modal",
         texto: "Contenido del Modal"
       };
-      this.$refs.modalText.open(data);
+      this.$refs.modalText.open(dataModal);
     },
     openModalAlert() {
       const data = {
@@ -110,7 +111,7 @@ export default {
         tituloModal: "Título del Modal",
         msgModal: "Contenido del Modal"
       }
-      this.$refs.modalAlert.open(data);
+      this.$refs.modalAlert.open(dataModal);
     },
   },
 };

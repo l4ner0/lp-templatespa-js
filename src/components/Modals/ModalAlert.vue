@@ -74,7 +74,6 @@
   </v-dialog>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -88,9 +87,6 @@ export default {
       tituloModal: "",
       msgModal: ""
     };
-  },
-  computed: {
-    ...mapGetters("ui", ["modalAlert"]),
   },
   methods: {
     /* closeModal() {
